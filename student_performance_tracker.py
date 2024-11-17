@@ -11,9 +11,9 @@ class Student():
     def is_passing(self):
         avg_marks=self.calculate_avg()
         if avg_marks >= 40:
-            print("passed")
+            print(f"{self.name.upper()} is passed")
         else:
-            print("needs improvement")
+            print(f"{self.name.upper()} needs improvement")
 class PerformanceTracker (Student):
     def __init__ (self, students: dict):     #dict must contain name of student as key and objects as value.
         super().__init__(name, score)
@@ -37,15 +37,15 @@ class PerformanceTracker (Student):
         class_avg= avg/len(students.keys())
         return class_avg
     def display_student_performance (self):
-        for value in students.values ():
-            print(f"The average score of {self.name} is {value.calculate_avg()}")
-            f"The student {self.name}'s status is {value.is_passing()}"
+        for key, value in students.items():
+            print(f"The average score of {key.upper()} is {value.calculate_avg():.2f}")
+            value.is_passing()
 students: dict ={} #this dictionary will be added as attribute to the performance tracker class.
 while True: #loop to take input from user to add student name and list of numbers. these 2 attributes will be added to make objects of subject class.
     name= input ("enter name of student: ")
-    subjects = int(input ("Enter number of subjects to add their marks: "))
+    subjects = ["Math", "Science", "English"]
     score = []
-    for subject in range (1, subjects+1):
+    for subject in subjects:
         marks = int(input (f"Enter the marks of subject {subject}: "))
         score.append (marks)
     obj= Student(name, score) #object created every time loop run.
