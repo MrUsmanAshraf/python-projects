@@ -1,3 +1,5 @@
+class Custom_Error(Exception):
+    pass
 class Student():
     def __init__(self, name: str, score: list):
         self.name = name
@@ -9,11 +11,10 @@ class Student():
         avg_marks= sum/len(self.score)
         return avg_marks
     def is_passing(self):
-        avg_marks=self.calculate_avg()
-        if avg_marks >= 40:
-            print(f"{self.name.upper()} is passed")
+        if any (num < 40 for num in self.score):
+            return f"{self.name} Needs improvement in a few subjects."
         else:
-            print(f"{self.name.upper()} needs improvement")
+            return f"{self.name} passed."
 class PerformanceTracker (Student):
     def __init__ (self, students: dict):     #dict must contain name of student as key and objects as value.
         super().__init__(name, score)
@@ -30,19 +31,26 @@ class PerformanceTracker (Student):
         avg=0
         for value in students.values ():
             s_avg=value.calculate_avg()
-            # obj1=students.values ()
-            # obj1.calculate_avg()
             avg = avg+ s_avg
-            # avg+= avg
         class_avg= avg/len(students.keys())
-        return class_avg
+        print(f"The average of whole class is {class_avg:.2f}")
     def display_student_performance (self):
         for key, value in students.items():
             print(f"The average score of {key.upper()} is {value.calculate_avg():.2f}")
-            value.is_passing()
+            print(value.is_passing())
 students: dict ={} #this dictionary will be added as attribute to the performance tracker class.
 while True: #loop to take input from user to add student name and list of numbers. these 2 attributes will be added to make objects of subject class.
-    name= input ("enter name of student: ")
+    while True:
+        try:
+            name: str= input ("enter name of student: ")
+            if name.isdigit():
+                raise Custom_Error ("name of student can not not be digits.")
+            if not name.isalpha():
+                raise Custom_Error ("name of student can have string only.")
+            else:
+                break
+        except Custom_Error as err:
+            print(err)
     subjects = ["Math", "Science", "English"]
     score = []
     for subject in subjects:
@@ -50,9 +58,18 @@ while True: #loop to take input from user to add student name and list of number
         score.append (marks)
     obj= Student(name, score) #object created every time loop run.
     students[name]= obj # student name and object of student class is added to the the "students" dict as key and value respectively. 
-    choice = input ("Do you want to add another student (yes/no): ")
-    if choice =="no":
+    while True:
+        try:
+            choice = input ("Do you want to add another student (yes/no): ")
+            if choice.lower() not in ["yes","no"]:
+                raise Custom_Error ("only yes or no is allowed")
+            else:
+                break
+        except Custom_Error as err:
+            print(err)
+    if choice.lower() =="no":
         break
 p1= PerformanceTracker(students)
 p1.display_student_performance()
-p1.add_student()
+p1.calculate_class_avg()
+# p1.add_student()
