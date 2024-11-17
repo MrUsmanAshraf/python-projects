@@ -21,9 +21,9 @@ class PerformanceTracker (Student):
 
     def add_student(self):
         name = input ("Enter the name of student: ")
-        subjects = int(input ("Enter number of subjects to add their marks: "))
+        subjects = ["Math", "Science", "English"]
         score = []
-        for subject in range (1, subjects+1):
+        for subject in subjects:
             marks = int(input (f"Enter the marks of subject {subject}: "))
             score.append (marks)
     def calculate_class_avg(self):
@@ -55,3 +55,4 @@ while True: #loop to take input from user to add student name and list of number
         break
 p1= PerformanceTracker(students)
 p1.display_student_performance()
+p1.add_student()
