@@ -21,11 +21,26 @@ class PerformanceTracker (Student):
         self.students = students 
 
     def add_student(self):
-        name = input ("Enter the name of student: ")
+        while True:
+            try:
+                name: str= input ("enter name of student: ")
+                if name.isdigit():
+                    raise Custom_Error ("name of student can not not be digits.")
+                if not name.isalpha():
+                    raise Custom_Error ("name of student can have string only.")
+                else:
+                    break
+            except Custom_Error as err:
+                print(err)
         subjects = ["Math", "Science", "English"]
         score = []
         for subject in subjects:
-            marks = int(input (f"Enter the marks of subject {subject}: "))
+            while True: 
+                try:
+                    marks = int(input (f"Enter the marks of subject {subject}: "))
+                    break
+                except ValueError:
+                    print("Enter a valid integer please.")
             score.append (marks)
     def calculate_class_avg(self):
         avg=0
@@ -51,10 +66,18 @@ while True: #loop to take input from user to add student name and list of number
                 break
         except Custom_Error as err:
             print(err)
+  
+  
+  
     subjects = ["Math", "Science", "English"]
     score = []
     for subject in subjects:
-        marks = int(input (f"Enter the marks of subject {subject}: "))
+        while True:
+            try:
+                marks = int(input (f"Enter the marks of subject {subject}: "))
+                break
+            except ValueError:
+                print("invalid data, Enter a valid integer.")
         score.append (marks)
     obj= Student(name, score) #object created every time loop run.
     students[name]= obj # student name and object of student class is added to the the "students" dict as key and value respectively. 
@@ -71,5 +94,4 @@ while True: #loop to take input from user to add student name and list of number
         break
 p1= PerformanceTracker(students)
 p1.display_student_performance()
-p1.calculate_class_avg()
-# p1.add_student()
+p1.calculate_class_avg
